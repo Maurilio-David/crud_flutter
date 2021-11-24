@@ -15,22 +15,31 @@ class Users with ChangeNotifier {
     return _items.length;
   }
 
-  User byIndex (int i){
+  User byIndex(int i) {
     return _items.values.elementAt(i);
   }
 
   void put(User user) {
-    if(user == null) {
+    if (user == null) {
       return;
     }
+
+    if (user.id != null &&
+        user.id.trim().isNotEmpty &&
+        _items.containsKey(user.id)) {
+      _items.update(user.id, (value) => user);
+    }
+
     final id = Random().nextDouble().toString();
 
-    _items.putIfAbsent(id, () => User(
-      id: id,
-      name: 'Teste',
-      email: 'teste@teste.com',
-      avatarUrl: '',
-    ));
+    _items.putIfAbsent(
+        id,
+        () => User(
+              id: id,
+              name: 'Teste',
+              email: 'teste@teste.com',
+              avatarUrl: '',
+            ));
     //add ou
 
     //alterar
